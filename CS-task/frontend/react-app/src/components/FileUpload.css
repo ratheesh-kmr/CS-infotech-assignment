@@ -1,5 +1,7 @@
-/* General styles */
-.file-upload-container {
+/* FileUpload.css */
+
+/* General styles - Full Screen */
+.file-upload-container-full {
     min-height: 100vh;
     width: 100vw;
     background-image: url("../assets/bg.jpeg");
@@ -7,15 +9,16 @@
     background-position: center;
     background-size: cover;
     color: white;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
   
-  /* Headings */
-  .file-upload-title {
-    font-size: 2rem;
+  /* Headings - Full Screen */
+  .file-upload-title-full {
+    font-size: 2.5rem;
     font-weight: bold;
     color: #9ac9ff;
     margin-bottom: 1.5rem;
@@ -24,80 +27,82 @@
     letter-spacing: 1px;
   }
   
-  /* Upload Box */
-  .file-upload-box {
+  /* Upload Box - Full Screen */
+  .file-upload-box-full {
     background: rgba(30, 41, 59, 0.9);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
-    width: 100%;
-    max-width: 450px;
+    width: 60%;
+    max-width: 600px;
     text-align: center;
     backdrop-filter: blur(8px);
   }
   
-  .file-upload-box h2 {
+  .file-upload-box-full h2 {
     margin-bottom: 1rem;
     color: #9ac9ff;
+    font-size: 1.5rem;
   }
   
-  /* File Input */
-  .file-input {
+  /* File Input - Full Screen */
+  .file-input-full {
     background: #334155;
     color: white;
     padding: 12px;
     border-radius: 8px;
     border: 1px solid #475569;
     width: 100%;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
   }
   
-  .file-input:focus {
+  .file-input-full:focus {
     border-color: #10b981;
     outline: none;
     box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
   }
   
-  /* Upload Button */
-  .upload-button {
+  /* Upload Button - Full Screen */
+  .upload-button-full {
     width: 100%;
     background-color: #10b981;
-    padding: 12px;
+    padding: 14px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
     border: none;
     transition: background 0.3s ease-in-out, transform 0.2s;
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin-top: 1rem;
   }
   
-  .upload-button:hover {
+  .upload-button-full:hover {
     background-color: #059669;
     transform: scale(1.05);
   }
   
-  /* Table Styles */
-  .records-table {
-    width: 100%;
-    max-width: 900px;
+  /* Table Styles - Full Screen */
+  .records-table-full {
+    width: 80%;
+    max-width: 1200px;
     background: rgba(30, 41, 59, 0.9);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
     margin-top: 2rem;
     backdrop-filter: blur(8px);
   }
   
-  .records-table h2 {
+  .records-table-full h2 {
     text-align: center;
     color: #9ac9ff;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.8rem;
   }
   
-  /* Table Structure */
-  .records-table table {
+  /* Table Structure - Full Screen */
+  .records-table-full table {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
@@ -105,57 +110,62 @@
     overflow: hidden;
   }
   
-  .records-table th, .records-table td {
-    padding: 12px;
+  .records-table-full th,
+  .records-table-full td {
+    padding: 14px;
     border-bottom: 1px solid #334155;
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
   
-  .records-table th {
+  .records-table-full th {
     background: #0f172a;
     color: #9ac9ff;
     text-transform: uppercase;
   }
   
-  .records-table tr:hover {
+  .records-table-full tr:hover {
     background: #334155;
     transition: background 0.3s ease;
   }
   
-  /* Responsive Styles */
+  /* Responsive Styles - Full Screen */
   @media (max-width: 768px) {
-    .file-upload-container {
-      padding: 2rem;
+    .file-upload-container-full {
+      padding: 1rem;
+      width: 95vw;
     }
   
-    .file-upload-box {
+    .file-upload-box-full {
       width: 90%;
     }
   
-    .records-table {
-      width: 100%;
+    .records-table-full {
+      width: 95%;
       overflow-x: auto;
     }
   
-    .records-table table {
+    .records-table-full table {
       display: block;
       overflow-x: auto;
       white-space: nowrap;
     }
   }
+  
+  /* Back Button */
   .back-button {
-    position: absolute; /* Position it absolutely */
-    top: 10px; /* Adjust top distance */
-    left: 10px; /* Adjust left distance */
-    background-color: #334155; /* Background color */
-    color: white; /* Text color */
-    padding: 8px 12px; /* Padding */
-    border-radius: 6px; /* Border radius */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s ease; /* Transition effect */
-    z-index: 10; /* Ensure it's on top */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #334155;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+    font-size: 1.1rem;
   }
   
   .back-button:hover {
-    background-color: #475569; /* Hover background color */
+    background-color: #475569;
   }

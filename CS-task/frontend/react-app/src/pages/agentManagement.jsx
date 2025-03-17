@@ -114,6 +114,11 @@ const AgentManagement = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
   };
+  const handleUpload = () => {
+    window.location.href = "/upload";
+  };
+
+ 
 
   return (
     <div className="agent-container">
@@ -178,6 +183,7 @@ const AgentManagement = () => {
           </tbody>
         </table>
       </div>
+      <button className="upload-button" onClick={handleUpload}>Upload CSV</button>
     </div>
   );
 };

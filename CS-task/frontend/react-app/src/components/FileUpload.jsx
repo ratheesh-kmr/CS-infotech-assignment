@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./FileUpload.css";
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -45,22 +45,26 @@ const FileUpload = () => {
   }, []);
 
   return (
-    <div className="file-upload-container-small">
+    <div className="file-upload-container-full">
       <Link to="/agent" className="back-button">
         &lt; Back to Agents
       </Link>
 
-      <h2 className="file-upload-title-small">Upload File</h2>
+      <h2 className="file-upload-title-full">Upload File</h2>
 
-      <div className="file-upload-box-small">
+      <div className="file-upload-box-full">
         <h2>Select File</h2>
-        <input type="file" onChange={handleFileChange} className="file-input-small" />
-        <button onClick={handleUpload} className="upload-button-small">
+        <input
+          type="file"
+          onChange={handleFileChange}
+          className="file-input-full"
+        />
+        <button onClick={handleUpload} className="upload-button-full">
           Upload
         </button>
       </div>
 
-      <div className="records-table-small">
+      <div className="records-table-full">
         <h2>Distributed Records</h2>
         <table>
           <thead>
