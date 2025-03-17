@@ -1,103 +1,210 @@
-/* AgentManagement.css */
-
 /* General styles */
 .agent-container {
-    height: relative;
-    width: 100vw; 
-    background-image: url("../assets/bg.jpeg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    color: white;
-    padding: 3.5rem;
+  min-height: 100vh;
+  width: 100vw;
+  background-image: url("../assets/bg.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Headings */
+.agent-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #9ac9ff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Form Container */
+.agent-form {
+  background: rgba(30, 41, 59, 0.9);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.agent-form h2 {
+  margin-bottom: 1rem;
+  color: #9ac9ff;
+}
+
+/* Form Input Fields */
+.agent-form input,
+.mobile-input select {
+  background: #334155;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.agent-form input:focus,
+.mobile-input select:focus {
+  border-color: #10b981;
+  outline: none;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+/* Submit Button */
+.agent-form button {
+  width: 100%;
+  background-color: #10b981;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  font-size: 1rem;
+}
+
+.agent-form button:hover {
+  background-color: #059669;
+  transform: scale(1.05);
+}
+
+/* Table Styles */
+.agent-table {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(30, 41, 59, 0.9);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+  margin-top: 2rem;
+  backdrop-filter: blur(8px);
+}
+
+.agent-table h2 {
+  text-align: center;
+  color: #9ac9ff;
+  margin-bottom: 1rem;
+}
+
+/* Table Structure */
+.agent-table table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.agent-table th, .agent-table td {
+  padding: 12px;
+  border-bottom: 1px solid #334155;
+  font-size: 1rem;
+}
+
+.agent-table th {
+  background: #0f172a;
+  color: #9ac9ff;
+  text-transform: uppercase;
+}
+
+.agent-table tr:hover {
+  background: #334155;
+  transition: background 0.3s ease;
+}
+
+/* Actions */
+.agent-table button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+/* Edit Button */
+.agent-table button:first-child {
+  background-color: #3b82f6;
+  color: white;
+  margin-right: 8px;
+  margin-bottom: 5px;
+}
+
+.agent-table button:first-child:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
+/* Delete Button */
+.delete-button {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #dc2626;
+  transform: scale(1.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .agent-container {
+    padding: 2rem;
   }
-  
-  /* Headings */
-  .agent-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #9ac9ff; /* MongoDB Green */
-    margin-bottom: 1.5rem;
-  }
-  
-  /* Form Container */
+
   .agent-form {
-    background: #1e293b;
-    padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    margin-bottom: 1.5rem;
+    width: 90%;
   }
-  
-  /* Form Input Fields */
-  .agent-form input {
-    background: #334155;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #475569;
-    width: 100%;
-    margin-bottom: 0.75rem;
-  }
-  
-  .agent-form input:focus {
-    border-color: #10b981;
-    outline: none;
-  }
-  
-  /* Submit Button */
-  .agent-form button {
-    width: 100%;
-    background-color: #10b981;
-    padding: 10px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .agent-form button:hover {
-    background-color: #059669;
-  }
-  
-  /* Table Styles */
+
   .agent-table {
     width: 100%;
-    background: #1e293b;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow-x: auto;
   }
-  
+
   .agent-table table {
-    width: 100%;
-    text-align: left;
-    border-collapse: collapse;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: center;
+  margin-bottom: 20px;
+  margin-right: 200vh; /* Add space between the left edge */
+  width: 10%; /* Take full width */
+}
+
+.logout-button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 220px; /* Reduced margin */
   
-  .agent-table th, .agent-table td {
-    padding: 10px;
-    border-bottom: 1px solid #334155;
-  }
-  
-  .agent-table tr:hover {
-    background: #334155;
-  }
-  
-  /* Delete Button */
-  .delete-button {
-    background-color: #ef4444;
-    padding: 6px 12px;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .delete-button:hover {
-    background-color: #dc2626;
-  }
-  
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+.agent-title {
+  margin: 0 auto; /* Center the title */
+  margin-left: 200px; /* Add space between button and title */
+}

@@ -10,8 +10,10 @@ router.post("/", async (req, res) => {
 
   try {
     const existingAgent = await Agent.findOne({ email });
-    if (existingAgent) return res.status(400).json({ message: "Email already exists" });
-
+    if (existingAgent) {
+      let message = existingAgent.email === email ? "Email already exists" : "Mobile number already exists";
+      return res.status(400).json({ message });
+    }
     const newAgent = new Agent({ name, email, mobile, password });
     await newAgent.save();
     res.status(201).json({ message: "Agent created successfully" });
@@ -48,6 +50,15 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Agent deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/records", async (req, res) => {
+  try {
+    const records = await Record.find().populate("assignedAgent", "name email"); // Populate agent details
+    res.json(records);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const uploadRoutes = require("./routes/uploadRoutes");
+const fileRoutes = require("./routes/fileRoutes")
 
 const app = express();
 app.use(express.json());
@@ -21,4 +23,12 @@ app.use("/api/auth", authRoutes);
 
 const agentRoutes = require("./routes/agentRoutes");
 app.use("/agents", agentRoutes);
+
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads")); // Serve uploaded files
+app.use("/api", uploadRoutes); // Register file upload API
+
+app.use("/api", fileRoutes);
+
 
