@@ -20,7 +20,7 @@ function Login() {
 
     if (response.ok) {
       localStorage.setItem("token", data.token);
-      navigate("/dashboard");
+      navigate("/agent");
     } else {
       alert(data.message || "Login failed");
     }
@@ -60,11 +60,7 @@ function Login() {
 
           <button type="submit">Login</button>
 
-          <div className="register">
-            <p>
-              Don't have an account? <a href="#">Register</a>
-            </p>
-          </div>
+          
         </form>
       </div>
     </section>
