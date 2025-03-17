@@ -1,0 +1,109 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f7;
+    font-family: 'SF Pro Display', 'Helvetica Neue', sans-serif;
+  }
+  
+  /* Main Content Area */
+  .dashboard > div {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 240px; /* Sidebar width */
+  }
+  
+  .dashboard h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 1.5rem;
+  }
+  
+  .dashboard h3 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Agents List Styling */
+  .dashboard ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .dashboard li {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .dashboard li:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Sidebar Navigation (Add this if you want matching navigation) */
+  .sidebar {
+    position: fixed;
+    left: 0;
+    width: 240px;
+    height: 100%;
+    background: #ffffff;
+    padding: 2rem;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Header Styling */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .dashboard > div {
+      margin-left: 0;
+      padding: 1.5rem;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    .dashboard li {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard h2 {
+      font-size: 24px;
+    }
+  
+    .dashboard h3 {
+      font-size: 18px;
+    }
+  }
+  
+  /* Loading State (Optional) */
+  .loading-message {
+    text-align: center;
+    color: #86868b;
+    font-size: 16px;
+    padding: 2rem;
+  }
+  
