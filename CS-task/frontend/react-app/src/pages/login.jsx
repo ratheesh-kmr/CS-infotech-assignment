@@ -20,7 +20,7 @@ function Login() {
 
     if (response.ok) {
       localStorage.setItem("token", data.token);
-      navigate("/agent");
+      navigate("/dashboard");
     } else {
       alert(data.message || "Login failed");
     }

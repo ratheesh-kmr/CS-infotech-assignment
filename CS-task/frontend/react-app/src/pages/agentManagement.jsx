@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./AgentManagement.css";
 
 function MobileInputWithCountryCode({ value, onChange }) {
@@ -123,7 +124,9 @@ const AgentManagement = () => {
   return (
     <div className="agent-container">
       <div className="top-bar">
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
+      <Link to="/dashboard" className="back-button">
+        &lt; Back to Dashboard
+      </Link>
         <h1 className="agent-title">Agent Management</h1>
       </div>
 

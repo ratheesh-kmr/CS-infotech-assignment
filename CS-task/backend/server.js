@@ -2,33 +2,35 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const uploadRoutes = require("./routes/uploadRoutes");
-const fileRoutes = require("./routes/fileRoutes")
-
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 connectDB();
+
+// ROUTES
+const uploadRoutes = require("./routes/uploadRoutes");
+const fileRoutes = require("./routes/fileRoutes")
+const agentRoutes = require("./routes/agentRoutes");
+const authRoutes = require("./routes/auth");
+const adminRoutes = require("./routes/adminRoutes")
+
+//API END POINTS
+
+app.use("/api/auth", authRoutes);
+app.use("/agents", agentRoutes);
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads")); // Serve uploaded files
+app.use("/api", uploadRoutes); // Register file upload API
+app.use("/api", fileRoutes);
+app.use('/api/admin', adminRoutes); 
+
 
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-const authRoutes = require("./routes/auth");
-app.use("/api/auth", authRoutes);
-
-const agentRoutes = require("./routes/agentRoutes");
-app.use("/agents", agentRoutes);
-
-app.use(cors());
-app.use(express.json());
-app.use("/uploads", express.static("uploads")); // Serve uploaded files
-app.use("/api", uploadRoutes); // Register file upload API
-
-app.use("/api", fileRoutes);
-
 

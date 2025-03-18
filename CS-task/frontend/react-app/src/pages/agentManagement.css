@@ -22,10 +22,15 @@
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
+  position: absolute;
+  top: 20px;
+  left: 35%;
+  transform: translateX(-50%);
 }
 
 /* Form Container */
 .agent-form {
+  margin-top: 40px;
   background: rgba(30, 41, 59, 0.9);
   padding: 2rem;
   border-radius: 12px;
