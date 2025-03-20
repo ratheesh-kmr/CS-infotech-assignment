@@ -13,6 +13,7 @@ const fileRoutes = require("./routes/fileRoutes")
 const agentRoutes = require("./routes/agentRoutes");
 const authRoutes = require("./routes/auth");
 const adminRoutes = require("./routes/adminRoutes")
+const Record = require('./models/record');  
 
 //API END POINTS
 
@@ -24,6 +25,14 @@ app.use("/uploads", express.static("uploads")); // Serve uploaded files
 app.use("/api", uploadRoutes); // Register file upload API
 app.use("/api", fileRoutes);
 app.use('/api/admin', adminRoutes); 
+app.delete('/api/records', async (req, res) => {
+  try {
+    await Record.deleteMany({});
+    res.json({ message: 'All records cleared successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 app.get("/", (req, res) => {
