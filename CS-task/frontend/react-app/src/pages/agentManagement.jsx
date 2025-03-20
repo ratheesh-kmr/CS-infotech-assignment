@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./AgentManagement.css";
 
@@ -6,12 +6,16 @@ function MobileInputWithCountryCode({ value, onChange }) {
   const [countryCode, setCountryCode] = useState(value.countryCode || "+91");
 
   const handleMobileChange = (e) => {
-    onChange({ countryCode, mobile: e.target.value });
+    const phoneNumber = e.target.value;
+    if (/^\d{0,10}$/.test(phoneNumber)) {
+      onChange({ countryCode, mobile: phoneNumber });
+    }
   };
 
   const handleCountryCodeChange = (e) => {
-    setCountryCode(e.target.value);
-    onChange({ countryCode: e.target.value, mobile: value.mobile || "" });
+    const newCode = e.target.value;
+    setCountryCode(newCode);
+    onChange({ countryCode: newCode, mobile: value.mobile || "" });
   };
 
   return (
@@ -23,7 +27,7 @@ function MobileInputWithCountryCode({ value, onChange }) {
       </select>
       <input
         type="text"
-        placeholder="Mobile Number"
+        placeholder="Mobile Number (10 digits)"
         value={value.mobile || ""}
         onChange={handleMobileChange}
         required
@@ -41,6 +45,7 @@ const AgentManagement = () => {
     password: "",
   });
   const [editingAgent, setEditingAgent] = useState(null);
+  const formRef = useRef(null);
 
   useEffect(() => {
     fetchAgents();
@@ -54,6 +59,16 @@ const AgentManagement = () => {
 
   const addAgent = async (e) => {
     e.preventDefault();
+
+    if (newAgent.name.length < 2) {
+      alert("Name should have at least 2 characters.");
+      return;
+    }
+
+    if (newAgent.mobile.mobile.length !== 10) {
+      alert("Mobile number should be exactly 10 digits.");
+      return;
+    }
 
     try {
       const res = await fetch("http://localhost:5000/agents", {
@@ -80,6 +95,16 @@ const AgentManagement = () => {
 
   const updateAgent = async (e) => {
     e.preventDefault();
+
+    if (editingAgent.name.length < 2) {
+      alert("Name should have at least 2 characters.");
+      return;
+    }
+
+    if (editingAgent.mobile.mobile.length !== 10) {
+      alert("Mobile number should be exactly 10 digits.");
+      return;
+    }
 
     try {
       const res = await fetch(`http://localhost:5000/agents/${editingAgent._id}`, {
@@ -115,50 +140,69 @@ const AgentManagement = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
   };
+
   const handleUpload = () => {
     window.location.href = "/upload";
   };
 
- 
+  const handleEdit = (agent) => {
+    const countryCode = agent.mobile.slice(0, 3);
+    const mobileNumber = agent.mobile.slice(3);
+    setEditingAgent({
+      ...agent,
+      mobile: { countryCode, mobile: mobileNumber },
+    });
+    window.scrollTo({ top: formRef.current.offsetTop, behavior: "smooth" });
+  };
 
   return (
     <div className="agent-container">
       <div className="top-bar">
-      <Link to="/dashboard" className="back-button">
-        &lt; Back to Dashboard
-      </Link>
+        <Link to="/dashboard" className="back-button">&lt; Back to Dashboard</Link>
         <h1 className="agent-title">Agent Management</h1>
       </div>
 
-      <form onSubmit={editingAgent ? updateAgent : addAgent} className="agent-form">
-        <h2>{editingAgent ? "Edit Agent" : "Add New Agent"}</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={editingAgent ? editingAgent.name : newAgent.name}
-          onChange={(e) => editingAgent ? setEditingAgent({ ...editingAgent, name: e.target.value }) : setNewAgent({ ...newAgent, name: e.target.value })}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={editingAgent ? editingAgent.email : newAgent.email}
-          onChange={(e) => editingAgent ? setEditingAgent({ ...editingAgent, email: e.target.value }) : setNewAgent({ ...newAgent, email: e.target.value })}
-          required
-        />
-        <MobileInputWithCountryCode
-          value={editingAgent ? editingAgent.mobile : newAgent.mobile}
-          onChange={(value) => editingAgent ? setEditingAgent({ ...editingAgent, mobile: value }) : setNewAgent({ ...newAgent, mobile: value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={editingAgent ? editingAgent.password : newAgent.password}
-          onChange={(e) => editingAgent ? setEditingAgent({ ...editingAgent, password: e.target.value }) : setNewAgent({ ...newAgent, password: e.target.value })}
-          required
-        />
-        <button type="submit">{editingAgent ? "Update Agent" : "Add Agent"}</button>
-      </form>
+      <form ref={formRef} onSubmit={editingAgent ? updateAgent : addAgent} className="agent-form">
+  <h2>{editingAgent ? "Edit Agent" : "Add New Agent"}</h2>
+  <input
+    type="text"
+    placeholder="Name (Min 2 Characters)"
+    value={editingAgent ? editingAgent.name : newAgent.name}
+    onChange={(e) => editingAgent 
+      ? setEditingAgent({ ...editingAgent, name: e.target.value }) 
+      : setNewAgent({ ...newAgent, name: e.target.value })}
+    required
+  />
+  <input
+    type="email"
+    placeholder="Email"
+    value={editingAgent ? editingAgent.email : newAgent.email}
+    onChange={(e) => editingAgent 
+      ? setEditingAgent({ ...editingAgent, email: e.target.value }) 
+      : setNewAgent({ ...newAgent, email: e.target.value })}
+    required
+  />
+  <MobileInputWithCountryCode
+    value={editingAgent ? editingAgent.mobile : newAgent.mobile}
+    onChange={(value) => editingAgent 
+      ? setEditingAgent({ ...editingAgent, mobile: value }) 
+      : setNewAgent({ ...newAgent, mobile: value })}
+  />
+
+  {/* Password input only shown when adding new agent */}
+  {!editingAgent && (
+    <input
+      type="password"
+      placeholder="Password"
+      value={newAgent.password}
+      onChange={(e) => setNewAgent({ ...newAgent, password: e.target.value })}
+      required
+    />
+  )}
+
+  <button type="submit">{editingAgent ? "Update Agent" : "Add Agent"}</button>
+</form>
+
 
       <div className="agent-table">
         <h2>Agents List</h2>
@@ -178,7 +222,7 @@ const AgentManagement = () => {
                 <td>{agent.email}</td>
                 <td>{agent.mobile}</td>
                 <td>
-                  <button onClick={() => setEditingAgent(agent)}>Edit</button>
+                  <button onClick={() => handleEdit(agent)}>Edit</button>
                   <button onClick={() => deleteAgent(agent._id)} className="delete-button">Delete</button>
                 </td>
               </tr>
@@ -186,7 +230,6 @@ const AgentManagement = () => {
           </tbody>
         </table>
       </div>
-      <button className="upload-button" onClick={handleUpload}>Upload CSV</button>
     </div>
   );
 };

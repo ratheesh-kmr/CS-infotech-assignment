@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     fetchAdminData();
   }, []);
 
-  if (!adminData) return <p className="loading-spinner">Loading profile...</p>;
+  if (!adminData) return <p className="loading-spinner"></p>;
 
   const handleLogout = () => {
     localStorage.removeItem("token");

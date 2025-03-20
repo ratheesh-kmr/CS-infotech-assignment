@@ -8,7 +8,15 @@ const FileUpload = () => {
   const [records, setRecords] = useState([]);
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    const allowedTypes = ["text/csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"];
+
+    if (!allowedTypes.includes(selectedFile.type)) {
+      alert("Invalid file format. Please upload a CSV or Excel file.");
+      setFile(null);
+    } else {
+      setFile(selectedFile);
+    }
   };
 
   const handleUpload = async () => {
@@ -40,6 +48,18 @@ const FileUpload = () => {
     }
   };
 
+  const clearRecords = async () => {
+    if (window.confirm("Are you sure you want to clear all records? This action cannot be undone.")) {
+      try {
+        await axios.delete("http://localhost:5000/api/records");
+        setRecords([]); // Clear frontend state
+        alert("All records have been cleared successfully.");
+      } catch (error) {
+        console.error("Error clearing records:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchRecords();
   }, []);
@@ -66,22 +86,35 @@ const FileUpload = () => {
 
       <div className="records-table-full">
         <h2>Distributed Records</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Record Data</th>
-              <th>Assigned Agent</th>
-            </tr>
-          </thead>
-          <tbody>
-            {records.map((record, index) => (
-              <tr key={index}>
-                <td>{JSON.stringify(record.data)}</td>
-                <td>{record.assignedAgent?.name || "Not Assigned"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {records.length > 0 ? (
+          <>
+            <button onClick={clearRecords} className="clear-button-full">
+              Clear Records
+            </button>
+            <table>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Phone</th>
+                  <th>Notes</th>
+                  <th>Assigned Agent</th>
+                </tr>
+              </thead>
+              <tbody>
+                {records.map((record, index) => (
+                  <tr key={index}>
+                    <td>{record.data.FirstName || "N/A"}</td>
+                    <td>{record.data.Phone || "N/A"}</td>
+                    <td>{record.data.Notes || "N/A"}</td>
+                    <td>{record.assignedAgent?.name || "Not Assigned"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        ) : (
+          <p>No records available. Please upload a file.</p>
+        )}
       </div>
     </div>
   );
