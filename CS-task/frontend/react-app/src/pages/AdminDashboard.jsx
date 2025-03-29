@@ -43,7 +43,7 @@ const AdminDashboard = () => {
 
         <div className="dashboard-buttons">
           <button onClick={() => window.location.href = '/agent'}>Agent Management</button>
-          <button onClick={() => window.location.href = '/upload'}>File Upload</button>
+          <button onClick={() => window.location.href = '/upload'}>Task Management</button>
         </div>
         <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
