@@ -141,10 +141,6 @@ const AgentManagement = () => {
     window.location.href = "/";
   };
 
-  const handleUpload = () => {
-    window.location.href = "/upload";
-  };
-
   const handleEdit = (agent) => {
     const countryCode = agent.mobile.slice(0, 3);
     const mobileNumber = agent.mobile.slice(3);
@@ -163,46 +159,42 @@ const AgentManagement = () => {
       </div>
 
       <form ref={formRef} onSubmit={editingAgent ? updateAgent : addAgent} className="agent-form">
-  <h2>{editingAgent ? "Edit Agent" : "Add New Agent"}</h2>
-  <input
-    type="text"
-    placeholder="Name (Min 2 Characters)"
-    value={editingAgent ? editingAgent.name : newAgent.name}
-    onChange={(e) => editingAgent 
-      ? setEditingAgent({ ...editingAgent, name: e.target.value }) 
-      : setNewAgent({ ...newAgent, name: e.target.value })}
-    required
-  />
-  <input
-    type="email"
-    placeholder="Email"
-    value={editingAgent ? editingAgent.email : newAgent.email}
-    onChange={(e) => editingAgent 
-      ? setEditingAgent({ ...editingAgent, email: e.target.value }) 
-      : setNewAgent({ ...newAgent, email: e.target.value })}
-    required
-  />
-  <MobileInputWithCountryCode
-    value={editingAgent ? editingAgent.mobile : newAgent.mobile}
-    onChange={(value) => editingAgent 
-      ? setEditingAgent({ ...editingAgent, mobile: value }) 
-      : setNewAgent({ ...newAgent, mobile: value })}
-  />
+        <h2>{editingAgent ? "Edit Agent" : "Add New Agent"}</h2>
+        <input
+          type="text"
+          placeholder="Name (Min 2 Characters)"
+          value={editingAgent ? editingAgent.name : newAgent.name}
+          onChange={(e) => editingAgent 
+            ? setEditingAgent({ ...editingAgent, name: e.target.value }) 
+            : setNewAgent({ ...newAgent, name: e.target.value })}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={editingAgent ? editingAgent.email : newAgent.email}
+          disabled={!!editingAgent}
+          required
+        />
+        <MobileInputWithCountryCode
+          value={editingAgent ? editingAgent.mobile : newAgent.mobile}
+          onChange={(value) => editingAgent 
+            ? setEditingAgent({ ...editingAgent, mobile: value }) 
+            : setNewAgent({ ...newAgent, mobile: value })}
+        />
 
-  {/* Password input only shown when adding new agent */}
-  {!editingAgent && (
-    <input
-      type="password"
-      placeholder="Password"
-      value={newAgent.password}
-      onChange={(e) => setNewAgent({ ...newAgent, password: e.target.value })}
-      required
-    />
-  )}
+        {!editingAgent && (
+          <input
+            type="password"
+            placeholder="Password"
+            value={newAgent.password}
+            onChange={(e) => setNewAgent({ ...newAgent, password: e.target.value })}
+            required
+          />
+        )}
 
-  <button type="submit">{editingAgent ? "Update Agent" : "Add Agent"}</button>
-</form>
-
+        <button type="submit">{editingAgent ? "Update Agent" : "Add Agent"}</button>
+      </form>
 
       <div className="agent-table">
         <h2>Agents List</h2>
