@@ -14,7 +14,11 @@ const FileUpload = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    const allowedTypes = ["text/csv", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"];
+    const allowedTypes = [
+      "text/csv",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.ms-excel"
+    ];
 
     if (!selectedFile) return;
     if (!allowedTypes.includes(selectedFile.type)) {
@@ -64,7 +68,9 @@ const FileUpload = () => {
       formData.append("file", file);
 
       try {
-        await axios.post("http://localhost:5000/api/upload", formData, { headers: { "Content-Type": "multipart/form-data" } });
+        await axios.post("http://localhost:5000/api/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         fetchRecords();
         alert("File uploaded successfully!");
       } catch (error) {
@@ -98,7 +104,7 @@ const FileUpload = () => {
 
   const handleAgentClick = (agent) => {
     const agentTasks = records
-      .filter((record) => record?.assignedAgent?.name === agent.name)
+      .filter((record) => record?.assignedAgent?.name === agent?.name)
       .map((record) => record?.data?.Notes || "No task available");
 
     setSelectedAgent(agent);
@@ -109,7 +115,14 @@ const FileUpload = () => {
     }, 100);
   };
 
-  const uniqueAgents = [...new Map(records.map((record) => [record?.assignedAgent?.name, record.assignedAgent])).values()];
+  // Safely handle missing data with optional chaining and fallback values
+  const uniqueAgents = [
+    ...new Map(
+      records
+        .filter((record) => record?.assignedAgent?.name)
+        .map((record) => [record.assignedAgent.name, record.assignedAgent])
+    ).values(),
+  ];
 
   useEffect(() => {
     fetchRecords();
@@ -122,7 +135,12 @@ const FileUpload = () => {
 
       <div className="file-upload-box-full">
         <h2>Select File</h2>
-        <input type="file" onChange={handleFileChange} className="file-input-full" accept=".csv, .xlsx, .xls" />
+        <input
+          type="file"
+          onChange={handleFileChange}
+          className="file-input-full"
+          accept=".csv, .xlsx, .xls"
+        />
         <button onClick={handleUpload} className="upload-button-full">Upload</button>
       </div>
 
@@ -131,8 +149,12 @@ const FileUpload = () => {
         {uniqueAgents.length > 0 ? (
           <div>
             {uniqueAgents.map((agent, index) => (
-              <button key={index} onClick={() => handleAgentClick(agent)} className="agent-button-full">
-                {agent.name}
+              <button
+                key={index}
+                onClick={() => handleAgentClick(agent)}
+                className="agent-button-full"
+              >
+                {agent?.name || "Unknown Agent"}
               </button>
             ))}
             <button onClick={clearRecords} className="clear-button-full">Clear Records</button>
@@ -143,7 +165,7 @@ const FileUpload = () => {
 
         {selectedAgent && tasks.length > 0 && (
           <div className="tasks-list-full" ref={taskRef}>
-            <h3>Tasks for {selectedAgent.name}</h3>
+            <h3>Tasks for {selectedAgent?.name}</h3>
             {tasks.map((task, index) => (
               <p key={index}>{task}</p>
             ))}
