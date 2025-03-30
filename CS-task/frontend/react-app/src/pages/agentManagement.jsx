@@ -170,12 +170,20 @@ const AgentManagement = () => {
           required
         />
         <input
-          type="email"
-          placeholder="Email"
-          value={editingAgent ? editingAgent.email : newAgent.email}
-          disabled={!!editingAgent}
-          required
-        />
+  type="email"
+  placeholder="Email"
+  value={editingAgent ? editingAgent.email : newAgent.email}
+  onChange={(e) => {
+    if (editingAgent) {
+      setEditingAgent({ ...editingAgent, email: e.target.value });
+    } else {
+      setNewAgent({ ...newAgent, email: e.target.value });
+    }
+  }}
+  disabled={Boolean(editingAgent)}
+  required
+/>
+
         <MobileInputWithCountryCode
           value={editingAgent ? editingAgent.mobile : newAgent.mobile}
           onChange={(value) => editingAgent 
