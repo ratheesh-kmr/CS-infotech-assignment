@@ -8,7 +8,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
-        const token = localStorage.getItem('token'); // Assuming token is stored here
+        const token = localStorage.getItem('token'); 
         const response = await axios.get('http://localhost:5000/api/admin/profile', {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -158,19 +158,39 @@ const FileUpload = () => {
               </button>
             ))}
             <button onClick={clearRecords} className="clear-button-full">Clear Records</button>
+            
           </div>
+          
         ) : (
           <p>No records available. Please upload a file.</p>
         )}
 
-        {selectedAgent && tasks.length > 0 && (
-          <div className="tasks-list-full" ref={taskRef}>
-            <h3>Tasks for {selectedAgent?.name}</h3>
-            {tasks.map((task, index) => (
-              <p key={index}>{task}</p>
-            ))}
-          </div>
-        )}
+        {selectedAgent && (
+  <div className="tasks-list-full" ref={taskRef}>
+    <h3>Tasks for {selectedAgent?.name}</h3>
+    <table className="agent-task-table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Phone</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {records
+          .filter((record) => record?.assignedAgent?.name === selectedAgent?.name)
+          .map((record, index) => (
+            <tr key={index}>
+              <td>{record?.data?.FirstName || "N/A"}</td>
+              <td>{record?.data?.Phone || "N/A"}</td>
+              <td>{record?.data?.Notes || "N/A"}</td>
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const upload = require("../scripts/uploadFile");
 
 const router = express.Router();
 
-// File Upload and Distribution API
+
 router.post("/upload", upload.single("file"), async (req, res) => {
   try {
     if (!req.file) {
@@ -20,7 +20,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
 
     let records = [];
 
-    // Handle CSV files
+    
     if (fileExt === "text/csv") {
       fs.createReadStream(filePath)
         .pipe(csv())
@@ -31,7 +31,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
         });
     }
 
-    // Handle Excel files
+    
     else if (fileExt.includes("spreadsheetml")) {
       const workbook = xlsx.readFile(filePath);
       const sheetName = workbook.SheetNames[0];
@@ -49,24 +49,36 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-// Function to distribute data among 5 agents
+
 const distributeData = async (records) => {
-    const agents = await Agent.find(); // Fetch all agents from MongoDB
-    const agentCount = agents.length;
-    
-    if (agentCount === 0) throw new Error("No agents available!");
-  
-    let distributedRecords = [];
-  
-    // Distribute records as evenly as possible
-    records.forEach((record, index) => {
-      const assignedAgent = agents[index % agentCount]; // Assign round-robin
-      distributedRecords.push({ data: record, assignedAgent: assignedAgent._id });
-    });
-  
+  const agents = await Agent.find(); 
+  const agentCount = agents.length;
+
+  if (agentCount === 0) throw new Error("No agents available!");
+
+  let distributedRecords = [];
+  const totalRecords = records.length;
+
+  const baseTasksPerAgent = Math.floor(totalRecords / agentCount);
+  const extraTasks = totalRecords % agentCount;
+
+  let recordIndex = 0;
+
+  agents.forEach((agent, index) => {
+    const tasksForThisAgent = baseTasksPerAgent + (index < extraTasks ? 1 : 0);
+
+    for (let i = 0; i < tasksForThisAgent; i++) {
+      distributedRecords.push({
+        data: records[recordIndex],
+        assignedAgent: agent._id
+      });
+      recordIndex++;
+    }
+  });
 
   // Save distributed records to MongoDB
   await Record.insertMany(distributedRecords);
 };
+
 
 module.exports = router;
